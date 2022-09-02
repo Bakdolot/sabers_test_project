@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Test</title>
+</head>
+<body>
+    
+    <div class="container">
+
+    <div class="news-items">
+        {% for article in articles%}
+        <div class="news">
+                <img src="{{ article.preview_image.url }}" class="news-img" alt="img">
+                <h2 class="news-title"><a href="{% url 'articles:article_detail' pk=article.id %}">{{ article.title }}</a></h2>
+                <p>{{ article.short_description }}</p>
+                <h5> {{ article.created_at }} </h5>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?limit={{ limit }}&page=1">&laquo;{% translate "first" %}</a>
+                <a href="?limit={{ limit }}&page={{ page_obj.previous_page_number }}">{% translate "previous" %}</a>
+            {% endif %}
+    
+            <span class="current">
+                {% blocktranslate %}Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.{% endblocktranslate %}
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?limit={{ limit }}&page={{ page_obj.next_page_number }}">{% translate "next" %}</a>
+                <a href="?limit={{ limit }}&page={{ page_obj.paginator.num_pages }}">{% translate "last" %} &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <span>{% blocktranslate %}set page paginate count{% endblocktranslate %}</span>
+    <a href="?limit=10">10</a>
+    <a href="?limit=20">20</a>
+    <a href="?limit=50">50</a>
+</body>
+</html>

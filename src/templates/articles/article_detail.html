@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Test</title>
+</head>
+<img src="{{ object.preview_image.url }}" class="news-img" alt="img">
+<h2>{{ object.title }}</h2>
+<p>{{ object.text }}</p>
+<h5> {{ object.created_at }} </h5>
+<p>{% translate "gallery" %}</p>
+{% for image_obj in object.gallery.all %}
+<img src="{{ image_obj.image.url }}" class="news-img" alt="img">
+{% endfor %}
